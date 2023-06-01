@@ -13,9 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BE6C06C9-A2EB-4073-9E33-86555F781476}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
-
-    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')"
-      >$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -40,11 +38,8 @@
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
-  <Target Name="QtMsBuildNotFound"
-    BeforeTargets="CustomBuild;ClCompile"
-    Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
-    <Message Importance="High"
-      Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
   </Target>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
@@ -69,7 +64,7 @@
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -86,12 +81,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtRcc Include="envelopeMain.qrc"/>
-    <QtUic Include="envelopeMain.ui"/>
-    <QtMoc Include="envelopeMain.h"/>
-    <ClCompile Include="envelopeMain.cpp"/>
-    <ClCompile Include="main.cpp"/>
-
+    <ClCompile Include="spl.cpp" />
+    <QtRcc Include="envelopeMain.qrc" />
+    <QtUic Include="envelopeMain.ui" />
+    <QtMoc Include="envelopeMain.h" />
+    <ClCompile Include="envelopeMain.cpp" />
+    <ClCompile Include="init_window.cpp" />
+    <ClCompile Include="inter.cpp" />
+    <ClCompile Include="main.cpp" />
+    <QtUic Include="init_window.ui" />
+    <QtUic Include="inter.ui" />
+    <QtUic Include="spl.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="init_window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="inter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="spl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
