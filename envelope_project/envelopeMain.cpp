@@ -5,6 +5,12 @@ envelopeMain::envelopeMain(QWidget *parent)
 {
     ui.setupUi(this);
 
+
+    QPalette pal = this->palette();
+    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
+    setPalette(pal);
+
+
     this->setFixedSize(QDesktopWidget().availableGeometry(this).size() * 0.7);
     create_actions();
     create_menus();

@@ -5,7 +5,9 @@ inter::inter(QWidget *parent)
 {
 	ui.setupUi(this);
 	this->setFixedSize(QDesktopWidget().availableGeometry(this).size() * 0.7);
-
+	QPalette pal = this->palette();
+	pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
+	setPalette(pal);
 
 
 
@@ -15,9 +17,11 @@ inter::inter(QWidget *parent)
 	// 左半部控件
 	lb_interval_set = new QLabel(QStringLiteral("区间大小"));
 	lb_interval_set->setAlignment(Qt::AlignCenter);
+	lb_interval_set->setFont(QFont("宋体"));
 	le_interval_set = new QLineEdit;
 	le_interval_set->setFixedHeight(30);
 	le_interval_set->setText(QString:: number(20));
+	le_interval_set->setFont(QFont("黑体"));
 	this->interval = le_interval_set->text().toInt(); // 区间大小默认20
 
 	connect(le_interval_set, SIGNAL(editingFinished()), this, SLOT(change_interval()));
@@ -27,7 +31,7 @@ inter::inter(QWidget *parent)
 	lb_degree_set->setAlignment(Qt::AlignCenter);
 	le_degree_set = new QLineEdit;
 	le_degree_set->setFixedHeight(30);
-	le_degree_set->setText(QString::number(10));
+	le_degree_set->setText(QString::number(20));
 	this->degree = le_degree_set->text().toInt(); // 区间大小默认20
 
 	connect(le_degree_set, SIGNAL(editingFinished()), this, SLOT(change_degree()));
@@ -60,13 +64,22 @@ inter::inter(QWidget *parent)
 	print_report->setFixedSize(QSize(500, 150));
 	print_report->setFixedHeight(150);
 
+	print_report->setFont(QFont("黑体", 18));
+	print_report->setStyleSheet("background-color: #F6EBFF;");
+
 	action = new QPushButton(QStringLiteral("开始运行"));
 	action->setFixedSize(QSize(500, 150));
 	action->setFixedHeight(150);
-	//右半部控件
+
+	action->setFont(QFont("黑体", 18));
+	action->setStyleSheet("background-color: #F6EBFF;");
+
 
 	connect(action, SIGNAL(clicked()), this, SLOT(create_thread()));
-
+	
+	
+	
+	//右半部控件
 	lb_image1_hint = new QLabel(QStringLiteral("原始图片"));
 	lb_image1_hint->setAlignment(Qt::AlignCenter);
 	lb_image1_hint->setFixedHeight(20);
@@ -198,15 +211,15 @@ void inter::create_thread()
 		this->close();
 		return;
 	}
-	worker = new workerThread(datapath, interval, degree);
-	//connect(worker, SIGNAL(show_image1(QString)), this, SLOT(show_img1(QString)));
+	worker = new workerThread(datapath, interval, degree, 1); // para 4 代表选取当前方法
+
 
 	// 图片发送信号接收槽
 	connect(worker, SIGNAL(send_image1(QString)), this, SLOT(handle_img1(QString)));
 	connect(worker, SIGNAL(send_image2(QString)), this, SLOT(handle_img2(QString)));
 	connect(worker, SIGNAL(send_image3(QString)), this, SLOT(handle_img3(QString)));
 	connect(worker, SIGNAL(send_image4(QString)), this, SLOT(handle_img4(QString)));
-
+	// 误差结果接收槽
 	connect(worker, SIGNAL(resultsReady(double, double, double)), this, SLOT(handle_results(double, double, double)));
 	//connect(worker, SIGNAL(massion_complete()), this, SLOT(getMassion_state()));
 	worker->start();
@@ -233,9 +246,7 @@ void inter::handle_results(double icp, double imwp, double mwd)
 
 void inter::handle_img1(QString cur_time)
 {
-	QString img1path = "C:/Users/X_xx/Desktop/res_save/";
-	QString img1name = tr("original_data_") + cur_time + ".jpg";
-	QString imgfullpath = img1path + img1name;
+	QString imgfullpath ="C:/Users/X_xx/Desktop/res_save/" + tr("original_data_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);
@@ -250,9 +261,7 @@ void inter::handle_img1(QString cur_time)
 
 void inter::handle_img2(QString cur_time)
 {
-	QString img1path = "C:/Users/X_xx/Desktop/res_save/";
-	QString img1name = tr("original_data_Max_Min_") + cur_time + ".jpg";
-	QString imgfullpath = img1path + img1name;
+	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_Max_Min_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);
@@ -266,9 +275,7 @@ void inter::handle_img2(QString cur_time)
 
 void inter::handle_img3(QString cur_time)
 {
-	QString img1path = "C:/Users/X_xx/Desktop/res_save/";
-	QString img1name = tr("original_data_Max_UP_Min_LOW_") + cur_time + ".jpg";
-	QString imgfullpath = img1path + img1name;
+	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_Max_UP_Min_LOW_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);
@@ -282,9 +289,7 @@ void inter::handle_img3(QString cur_time)
 
 void inter::handle_img4(QString cur_time)
 {
-	QString img1path = "C:/Users/X_xx/Desktop/res_save/";
-	QString img1name = tr("original_data_upper_lower") + cur_time + ".jpg";
-	QString imgfullpath = img1path + img1name;
+	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_upper_lower") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);

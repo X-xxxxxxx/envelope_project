@@ -2,6 +2,7 @@
 #include <qthread.h>
 
 #include "polynomial_interpolation.h"
+#include "envo_spline.h"
 //
 #include <mat.h>
 #include <matrix.h>
@@ -16,6 +17,7 @@
 #pragma comment (lib, "libeng.lib")
 
 #pragma comment(lib, "polynomial_interpolation.lib")
+#pragma comment(lib, "envo_spline.lib")
 
 //
 #include <QDateTime>
@@ -32,8 +34,8 @@ public :
     int interval;
     // Ω◊¥Œ…Ë÷√
     int degree;
-
-    workerThread(QString datapath, int interval, int degree);
+    int choose_option;
+    workerThread(QString datapath, int interval, int degree, int choose_option);
     void run() override;
 signals:
     void resultsReady(double, double, double);

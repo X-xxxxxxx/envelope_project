@@ -5,19 +5,29 @@ spl::spl(QWidget *parent)
 {
 	ui.setupUi(this);
 	this->setFixedSize(QDesktopWidget().availableGeometry(this).size() * 0.7);
+	QPalette pal = this->palette();
+	pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
+	setPalette(pal);
 
 	// 左半部控件
 	lb_interval_set = new QLabel(QStringLiteral("区间大小"));
 	lb_interval_set->setAlignment(Qt::AlignCenter);
 	le_interval_set = new QLineEdit;
 	le_interval_set->setFixedHeight(30);
+	le_interval_set->setText(QString::number(20));
+	this->interval = le_interval_set->text().toInt(); // 区间大小默认20
+
+	connect(le_interval_set, SIGNAL(editingFinished()), this, SLOT(change_interval()));
 
 
 	lb_degree_set = new QLabel(QStringLiteral("阶数设置"));
 	lb_degree_set->setAlignment(Qt::AlignCenter);
 	le_degree_set = new QLineEdit;
 	le_degree_set->setFixedHeight(30);
+	le_degree_set->setText(QString::number(3));
+	this->degree = le_degree_set->text().toInt(); // 区间大小默认20
 
+	connect(le_degree_set, SIGNAL(editingFinished()), this, SLOT(change_degree()));
 
 
 	lb_index1_hint = new QLabel(QStringLiteral("区间覆盖率ICP"));
@@ -46,9 +56,21 @@ spl::spl(QWidget *parent)
 	print_report->setFixedSize(QSize(500, 150));
 	print_report->setFixedHeight(150);
 
+	print_report->setFont(QFont("黑体", 18));
+	print_report->setStyleSheet("background-color: #F6EBFF;");
+
 	action = new QPushButton(QStringLiteral("开始运行"));
 	action->setFixedSize(QSize(500, 150));
 	action->setFixedHeight(150);
+
+	action->setFont(QFont("黑体", 18));
+	action->setStyleSheet("background-color: #F6EBFF;");
+
+
+
+	connect(action, SIGNAL(clicked()), this, SLOT(create_thread()));
+
+
 	//右半部控件
 
 	lb_image1_hint = new QLabel(QStringLiteral("原始图片"));
@@ -147,10 +169,130 @@ spl::spl(QWidget *parent)
 	layout_main->setStretchFactor(layout_right, 3);
 }
 
+
+
+// 重写关闭事件
 void spl::closeEvent(QCloseEvent* event)
 {
 	emit this_to_fath();
 	event->accept();
 }
+
+void spl::change_interval()
+{
+	this->interval = le_interval_set->text().toInt();
+	//qDebug() << this->interval << endl;
+}
+
+void spl::change_degree()
+{
+	this->degree = le_degree_set->text().toInt();
+
+	//qDebug() << this->degree << endl;
+}
+
+void spl::create_thread()
+{
+	//qDebug() << QStringLiteral("槽函数连接成功") << endl;
+	if (datapath == nullptr)
+	{
+		QMessageBox::information(this, QStringLiteral("数据路径选取失败提示窗口"),
+			QStringLiteral("您的数据选取有误，请返回上一级重新选取"));
+		this->close();
+		return;
+	}
+	worker = new workerThread(datapath, interval, degree, 2); // para 4 代表选取当前方法
+
+	connect(worker, SIGNAL(send_image1(QString)), this, SLOT(handle_img1(QString)));
+	connect(worker, SIGNAL(send_image2(QString)), this, SLOT(handle_img2(QString)));
+	connect(worker, SIGNAL(send_image3(QString)), this, SLOT(handle_img3(QString)));
+	connect(worker, SIGNAL(send_image4(QString)), this, SLOT(handle_img4(QString)));
+	// 误差结果接收槽
+	connect(worker, SIGNAL(resultsReady(double, double, double)), this, SLOT(handle_results(double, double, double)));
+	worker->start();
+
+}
+
+void spl::handle_results(double icp, double imwp, double mwd)
+{
+	// 显示误差结果
+	QString idx1 = QString::number(icp, 'f', 4);
+	lb_index1_show->setText(idx1);
+
+	QString idx2 = QString::number(imwp, 'f', 4);
+	lb_index2_show->setText(idx2);
+
+	QString idx3 = QString::number(mwd, 'f', 4);
+	lb_index3_show->setText(idx3);
+
+
+	// 销毁线程
+	worker->quit();
+	worker->wait();
+	delete worker;
+}
+
+void spl::handle_img1(QString cur_time)
+{
+	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_") + cur_time + ".jpg";
+
+	qDebug() << imgfullpath << endl;
+	QImageReader* reader = new QImageReader(imgfullpath);
+	//reader -> setFileName(res);
+
+	QPixmap  icon = QPixmap::fromImageReader(reader);
+	icon.scaled(lb_image1_show->size(), Qt::KeepAspectRatio);
+	lb_image1_show->setScaledContents(true);
+	lb_image1_show->setPixmap(icon);
+}
+
+void spl::handle_img2(QString cur_time)
+{
+	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_Max_Min_") + cur_time + ".jpg";
+
+	qDebug() << imgfullpath << endl;
+	QImageReader* reader = new QImageReader(imgfullpath);
+	//reader -> setFileName(res);
+
+	QPixmap  icon = QPixmap::fromImageReader(reader);
+	icon.scaled(lb_image2_show->size(), Qt::KeepAspectRatio);
+	lb_image2_show->setScaledContents(true);
+	lb_image2_show->setPixmap(icon);
+}
+
+void spl::handle_img3(QString cur_time)
+{
+	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_Max_UP_Min_LOW_") + cur_time + ".jpg";
+
+	qDebug() << imgfullpath << endl;
+	QImageReader* reader = new QImageReader(imgfullpath);
+	//reader -> setFileName(res);
+
+	QPixmap  icon = QPixmap::fromImageReader(reader);
+	icon.scaled(lb_image3_show->size(), Qt::KeepAspectRatio);
+	lb_image3_show->setScaledContents(true);
+	lb_image3_show->setPixmap(icon);
+}
+
+void spl::handle_img4(QString cur_time)
+{
+	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_upper_lower") + cur_time + ".jpg";
+
+	qDebug() << imgfullpath << endl;
+	QImageReader* reader = new QImageReader(imgfullpath);
+	//reader -> setFileName(res);
+
+	QPixmap  icon = QPixmap::fromImageReader(reader);
+	icon.scaled(lb_image4_show->size(), Qt::KeepAspectRatio);
+	lb_image4_show->setScaledContents(true);
+	lb_image4_show->setPixmap(icon);
+}
+
+
+void spl::get_datapath(QString datapath)
+{
+	this->datapath = datapath;
+}
+
 spl::~spl()
 {}

@@ -3,6 +3,8 @@
 #include <QWidget>
 #include "ui_spl.h"
 
+//
+#include <qDebug>
 
 //
 #include <QLabel>
@@ -16,6 +18,20 @@
 //
 #include <QDesktopWidget>
 #include <QCloseEvent>
+
+//
+
+#include "workerThread.h"
+
+//
+
+#include <QMessageBox>
+
+
+//
+
+#include <QImageReader>
+
 class spl : public QWidget
 {
 	Q_OBJECT
@@ -25,7 +41,16 @@ signals:
 public:
 	spl(QWidget *parent = nullptr);
 	void closeEvent(QCloseEvent*);
+
+	void get_datapath(QString datapath);
 	~spl();
+
+
+	int interval;
+	int degree;
+	QString datapath;
+	workerThread* worker;
+
 
 private:
 	Ui::splClass ui;
@@ -67,4 +92,20 @@ private:
 	QGridLayout* layout_left; // 左半部布局
 	QGridLayout* layout_right; // 右半部布局
 	QHBoxLayout* layout_main; //主布局
+
+
+private slots:
+	void change_interval();
+	void change_degree();
+
+
+	void create_thread();
+
+	// 接收子线程发送信号
+	void handle_results(double, double, double);
+
+	void handle_img1(QString);
+	void handle_img2(QString);
+	void handle_img3(QString);
+	void handle_img4(QString);
 };

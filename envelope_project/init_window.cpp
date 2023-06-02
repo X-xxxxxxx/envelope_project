@@ -8,6 +8,10 @@ init_window::init_window(QWidget *parent)
 {
 	ui.setupUi(this);
 
+    //QPalette pal = this->palette();
+    //pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
+    //setPalette(pal);
+
     
     lb_title = new QLabel(QStringLiteral("基于遥测数据航天器故障诊断系统"));
     lb_title->adjustSize();
@@ -17,17 +21,35 @@ init_window::init_window(QWidget *parent)
     bt_dataread->setText(QStringLiteral("数据读取"));
     bt_dataread->setFixedSize(QSize(500, 700));
 
+    //QPalette pall = bt_dataread->palette();
+    //pall.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/button_background.png")));
+    //bt_dataread -> setPalette(pall);
+
+    bt_dataread->setFont(QFont("黑体", 25));
+    bt_dataread->setStyleSheet("background-color: #F6EBFF;");
+
+
+//QPushButton:hover
+//{
+//    background - image:url(":/demo/pictures/2.png");
+//    border:none;
+//
+//}");
 
     connect(bt_dataread, SIGNAL(clicked()), this, SLOT(data_read()));
 
 
     bt_inter = new QPushButton;
-    bt_inter->setText(QStringLiteral("插值"));
+    bt_inter->setText(QStringLiteral("多项式拟合算法"));
     bt_inter->setFixedSize(QSize(700, 350));
+    bt_inter->setFont(QFont("黑体", 25));
+    bt_inter->setStyleSheet("background-color: #F6EBFF;");
 
     bt_spl = new QPushButton;
-    bt_spl->setText(QStringLiteral("样条"));
+    bt_spl->setText(QStringLiteral("B样条拟合算法"));
     bt_spl->setFixedSize(QSize(700, 350));
+    bt_spl->setFont(QFont("黑体", 25));
+    bt_spl->setStyleSheet("background-color: #F6EBFF;");
 
 
     // 布局
@@ -91,6 +113,7 @@ void init_window::data_read()
         QStringLiteral("数据已添加成功，请进行后续操作"));
 
     inter_widget->get_datapath(this -> datapath);
+    spl_widget->get_datapath(this->datapath);
 }
 
 init_window::~init_window()

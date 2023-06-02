@@ -18,6 +18,10 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+//
+
+#include <QPalette>
+#include <QBrush>
 
 class init_window : public QWidget
 {

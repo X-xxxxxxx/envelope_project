@@ -2,17 +2,17 @@
 
 #include <qDebug>
 
-workerThread::workerThread(QString datapath, int interval, int degree)
-	:datapath(datapath), interval(interval), degree(degree)
+workerThread::workerThread(QString datapath, int interval, int degree, int choose_option)
+	:datapath(datapath), interval(interval), degree(degree), choose_option(choose_option)
 {
 	qDebug() << QStringLiteral("子线程初始化成功") << endl;
 }
 
 void workerThread::run()
 {		
-	double icp, imwp, mwd;
+	double icp = 0, imwp = 0, mwd = 0;
 	qDebug() << QStringLiteral("子线程开启成功") << endl;
-	if (polynomial_interpolationInitialize())
+	if (polynomial_interpolationInitialize() && envo_splineInitialize())
 	{
 		qDebug() << QStringLiteral("dll 注入成功") << endl;
 
@@ -54,19 +54,17 @@ void workerThread::run()
 
 
 
-		polynomial_interpolation(3, idx1, idx2, idx3,
+		if (this -> choose_option == 1)
+			polynomial_interpolation(3, idx1, idx2, idx3,
 			data_path, interval_to_mw, degree_to_mw, fig_savepath_to_mw, cur_time);
+		else
+		{
+			envo_spline(3, idx1, idx2, idx3,
+				data_path, interval_to_mw, degree_to_mw, fig_savepath_to_mw, cur_time);
+		}
 
 
 
-	/*	msleep(1000);
-		emit show_image2();
-
-		msleep(1000);
-		emit show_image3();
-
-		msleep(1000);
-		emit show_image4();*/
 
 
 		idx1.GetData(&icp, 1);
@@ -95,6 +93,8 @@ void workerThread::run()
 		qDebug() << icp << "    " << imwp << "    " << mwd << endl;
 
 		polynomial_interpolationTerminate();
+
+		envo_splineTerminate();
 		mclTerminateApplication();
 	}
 
