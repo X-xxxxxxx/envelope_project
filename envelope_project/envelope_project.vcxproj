@@ -53,9 +53,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <IncludePath>D:\Matlab\R2021b\extern\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Matlab\R2021b\extern\lib\win64\microsoft;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalDependencies>polynomial_interpolation.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -82,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="spl.cpp" />
+    <ClCompile Include="workerThread.cpp" />
     <QtRcc Include="envelopeMain.qrc" />
     <QtUic Include="envelopeMain.ui" />
     <QtMoc Include="envelopeMain.h" />
@@ -101,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="spl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="workerThread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -49,6 +49,9 @@
     <ClCompile Include="spl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="workerThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="init_window.h">
@@ -58,6 +61,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="spl.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="workerThread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

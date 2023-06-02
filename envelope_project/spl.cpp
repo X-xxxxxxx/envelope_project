@@ -7,27 +7,34 @@ spl::spl(QWidget *parent)
 	this->setFixedSize(QDesktopWidget().availableGeometry(this).size() * 0.7);
 
 	// 左半部控件
-	lb_para_set = new QLabel(QStringLiteral("参数设置"));
-	lb_para_set->setAlignment(Qt::AlignCenter);
-	le_para_set = new QLineEdit;
-	le_para_set->setFixedHeight(30);
+	lb_interval_set = new QLabel(QStringLiteral("区间大小"));
+	lb_interval_set->setAlignment(Qt::AlignCenter);
+	le_interval_set = new QLineEdit;
+	le_interval_set->setFixedHeight(30);
 
 
-	lb_index1_hint = new QLabel(QStringLiteral("误差指标1"));
+	lb_degree_set = new QLabel(QStringLiteral("阶数设置"));
+	lb_degree_set->setAlignment(Qt::AlignCenter);
+	le_degree_set = new QLineEdit;
+	le_degree_set->setFixedHeight(30);
+
+
+
+	lb_index1_hint = new QLabel(QStringLiteral("区间覆盖率ICP"));
 	lb_index1_hint->setAlignment(Qt::AlignCenter);
 	lb_index1_show = new QLabel;
 	//lb_index1_show->setFrameShape(QFrame::Box);
 	lb_index1_show->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 	lb_index1_show->setFixedHeight(30);
 
-	lb_index2_hint = new QLabel(QStringLiteral("误差指标2"));
+	lb_index2_hint = new QLabel(QStringLiteral("区间平均宽度百分比IMWP"));
 	lb_index2_hint->setAlignment(Qt::AlignCenter);
 	lb_index2_show = new QLabel;
 	//lb_index2_show->setFrameShape(QFrame::Box);
 	lb_index2_show->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 	lb_index2_show->setFixedHeight(30);
 
-	lb_index3_hint = new QLabel(QStringLiteral("误差指标3"));
+	lb_index3_hint = new QLabel(QStringLiteral("平均带宽误差MWD"));
 	lb_index3_hint->setAlignment(Qt::AlignCenter);
 	lb_index3_show = new QLabel;
 	//lb_index3_show->setFrameShape(QFrame::Box);
@@ -82,19 +89,22 @@ spl::spl(QWidget *parent)
 
 	layout_left->setMargin(20);
 
-	layout_left->addWidget(lb_para_set, 0, 0);
-	layout_left->addWidget(le_para_set, 0, 1);
+	layout_left->addWidget(lb_interval_set, 0, 0);
+	layout_left->addWidget(le_interval_set, 0, 1);
 
-	layout_left->addWidget(lb_index1_hint, 1, 0);
-	layout_left->addWidget(lb_index1_show, 1, 1);
+	layout_left->addWidget(lb_degree_set, 1, 0);
+	layout_left->addWidget(le_degree_set, 1, 1);
 
-	layout_left->addWidget(lb_index2_hint, 2, 0);
-	layout_left->addWidget(lb_index2_show, 2, 1);
+	layout_left->addWidget(lb_index1_hint, 2, 0);
+	layout_left->addWidget(lb_index1_show, 2, 1);
 
-	layout_left->addWidget(lb_index3_hint, 3, 0);
-	layout_left->addWidget(lb_index3_show, 3, 1);
-	layout_left->addWidget(action, 4, 0, 1, 2);
-	layout_left->addWidget(print_report, 5, 0, 1, 2);
+	layout_left->addWidget(lb_index2_hint, 3, 0);
+	layout_left->addWidget(lb_index2_show, 3, 1);
+
+	layout_left->addWidget(lb_index3_hint, 4, 0);
+	layout_left->addWidget(lb_index3_show, 4, 1);
+	layout_left->addWidget(action, 5, 0, 1, 2);
+	layout_left->addWidget(print_report, 6, 0, 1, 2);
 
 	layout_left->setColumnStretch(0, 1);
 	layout_left->setColumnStretch(1, 2);
@@ -103,8 +113,9 @@ spl::spl(QWidget *parent)
 	layout_left->setRowStretch(1, 1);
 	layout_left->setRowStretch(2, 1);
 	layout_left->setRowStretch(3, 1);
-	layout_left->setRowStretch(4, 2);
+	layout_left->setRowStretch(4, 1);
 	layout_left->setRowStretch(5, 2);
+	layout_left->setRowStretch(6, 2);
 
 	layout_left->setHorizontalSpacing(-1);
 	layout_left->setVerticalSpacing(50);

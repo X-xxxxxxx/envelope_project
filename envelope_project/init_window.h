@@ -13,6 +13,12 @@
 #include "inter.h"
 #include "spl.h"
 
+//
+
+#include <QFileDialog>
+#include <QMessageBox>
+
+
 class init_window : public QWidget
 {
 	Q_OBJECT
@@ -20,6 +26,10 @@ class init_window : public QWidget
 public:
 	init_window(QWidget *parent = nullptr);
 	~init_window();
+
+	// 数据路径
+
+	QString datapath;
 signals:
 	void hide_mainwindow();
 	void show_mainwindow();
@@ -30,6 +40,8 @@ private slots:
 	void show_spl_widget();
 
 	void show_this(); // 子窗口关闭 打开主窗口
+
+	void data_read();
 
 	//void
 private:

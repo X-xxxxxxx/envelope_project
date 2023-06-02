@@ -16,6 +16,11 @@ init_window::init_window(QWidget *parent)
     bt_dataread = new QPushButton;
     bt_dataread->setText(QStringLiteral("数据读取"));
     bt_dataread->setFixedSize(QSize(500, 700));
+
+
+    connect(bt_dataread, SIGNAL(clicked()), this, SLOT(data_read()));
+
+
     bt_inter = new QPushButton;
     bt_inter->setText(QStringLiteral("插值"));
     bt_inter->setFixedSize(QSize(700, 350));
@@ -75,6 +80,17 @@ void init_window::show_this()
     //qDebug() << QStringLiteral("信号从子窗体发来 准备 向主窗口发送显示信息") << endl;
 
     //this->show();
+}
+
+void init_window::data_read()
+{
+    this -> datapath = QFileDialog :: getOpenFileName(this, 
+        QStringLiteral("请选择数据"),"C:/Users/X_xx/Desktop", "*.txt ");
+
+    QMessageBox::information(this, QStringLiteral("数据选取成功提示窗口"),
+        QStringLiteral("数据已添加成功，请进行后续操作"));
+
+    inter_widget->get_datapath(this -> datapath);
 }
 
 init_window::~init_window()

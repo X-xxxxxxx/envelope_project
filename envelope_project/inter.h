@@ -16,6 +16,16 @@
 #include <QDesktopWidget>
 #include <QCloseEvent>
 
+
+//
+
+#include <qDebug>
+#include <QMessageBox>
+#include <QImageReader>
+#include <QPixmap>
+//
+#include "workerThread.h"
+
 class inter : public QWidget
 {
 	Q_OBJECT
@@ -27,15 +37,24 @@ signals:
 public:
 	inter(QWidget *parent = nullptr);
 
+	void get_datapath(QString datapath);
 	void closeEvent(QCloseEvent*);
 	~inter();
+
+	int degree;
+	int interval;
+	QString datapath;
+	workerThread* worker;
 
 private:
 	Ui::interClass ui;
 	// 控件
 	// 左边控件
-	QLabel* lb_para_set;
-	QLineEdit* le_para_set;
+	QLabel* lb_interval_set;
+	QLineEdit* le_interval_set;
+
+	QLabel* lb_degree_set;
+	QLineEdit* le_degree_set;
 
 	QLabel* lb_index1_hint;
 	QLabel* lb_index1_show;
@@ -66,4 +85,21 @@ private:
 	QGridLayout* layout_left; // 左半部布局
 	QGridLayout* layout_right; // 右半部布局
 	QHBoxLayout* layout_main; //主布局
+
+
+	private slots:
+
+		void change_interval();
+		void change_degree();
+
+		void create_thread();
+
+		void handle_results(double, double, double);
+
+		void handle_img1(QString);
+		void handle_img2(QString);
+		void handle_img3(QString);
+		void handle_img4(QString);
+
+
 };

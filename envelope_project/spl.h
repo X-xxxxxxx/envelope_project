@@ -31,9 +31,12 @@ private:
 	Ui::splClass ui;
 
 	// ¿Ø¼þ
-// ×ó±ß¿Ø¼þ
-	QLabel* lb_para_set;
-	QLineEdit* le_para_set;
+		// ×ó±ß¿Ø¼þ
+	QLabel* lb_interval_set;
+	QLineEdit* le_interval_set;
+
+	QLabel* lb_degree_set;
+	QLineEdit* le_degree_set;
 
 	QLabel* lb_index1_hint;
 	QLabel* lb_index1_show;
