@@ -90,6 +90,7 @@ void init_window::show_inter_widget()
 
 void init_window::show_spl_widget()
 {
+    
     spl_widget->show();
     emit hide_mainwindow();
 

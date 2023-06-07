@@ -58,10 +58,9 @@ void workerThread::run()
 			polynomial_interpolation(3, idx1, idx2, idx3,
 			data_path, interval_to_mw, degree_to_mw, fig_savepath_to_mw, cur_time);
 		else
-		{
 			envo_spline(3, idx1, idx2, idx3,
 				data_path, interval_to_mw, degree_to_mw, fig_savepath_to_mw, cur_time);
-		}
+		
 
 
 
@@ -90,12 +89,16 @@ void workerThread::run()
 		msleep(1000);
 		emit send_image4(qstr); // 参数为 当前时间
 
+
+
 		qDebug() << icp << "    " << imwp << "    " << mwd << endl;
 
-		polynomial_interpolationTerminate();
+		
+			polynomial_interpolationTerminate();
 
-		envo_splineTerminate();
-		mclTerminateApplication();
+			envo_splineTerminate();
+			//mclTerminateApplication(); 
+		
 	}
 
 	qDebug() << QStringLiteral("子线程阻塞延时1秒") << endl;

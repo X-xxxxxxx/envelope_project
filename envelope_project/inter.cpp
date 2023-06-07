@@ -239,9 +239,12 @@ void inter::handle_results(double icp, double imwp, double mwd)
 
 
 	// 销毁线程
+
+
 	worker->quit();
 	worker->wait();
-	delete worker;
+	qDebug() << QStringLiteral("子线程已销毁") << endl;
+	//delete worker;
 }
 
 void inter::handle_img1(QString cur_time)

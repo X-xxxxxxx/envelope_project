@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/envelopeMain">
         <file>background.png</file>
+        <file>button_background.png</file>
     </qresource>
 </RCC>

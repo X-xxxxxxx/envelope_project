@@ -194,6 +194,8 @@ void spl::change_degree()
 void spl::create_thread()
 {
 	//qDebug() << QStringLiteral("槽函数连接成功") << endl;
+
+	qDebug() << QStringLiteral("创建新线程") << endl;
 	if (datapath == nullptr)
 	{
 		QMessageBox::information(this, QStringLiteral("数据路径选取失败提示窗口"),
@@ -203,6 +205,8 @@ void spl::create_thread()
 	}
 	worker = new workerThread(datapath, interval, degree, 2); // para 4 代表选取当前方法
 
+
+	qDebug() << datapath << "       " << interval  << "       " << degree << endl;
 	connect(worker, SIGNAL(send_image1(QString)), this, SLOT(handle_img1(QString)));
 	connect(worker, SIGNAL(send_image2(QString)), this, SLOT(handle_img2(QString)));
 	connect(worker, SIGNAL(send_image3(QString)), this, SLOT(handle_img3(QString)));
@@ -229,6 +233,8 @@ void spl::handle_results(double icp, double imwp, double mwd)
 	// 销毁线程
 	worker->quit();
 	worker->wait();
+
+	qDebug() << QStringLiteral("子线程销毁成功") << endl;
 	delete worker;
 }
 
