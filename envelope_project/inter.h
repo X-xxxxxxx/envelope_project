@@ -26,6 +26,11 @@
 //
 #include "workerThread.h"
 
+
+//
+#include "LoadingFrom.h"
+
+
 class inter : public QWidget
 {
 	Q_OBJECT
@@ -85,7 +90,9 @@ private:
 	QGridLayout* layout_left; // 左半部布局
 	QGridLayout* layout_right; // 右半部布局
 	QHBoxLayout* layout_main; //主布局
-
+	
+	// 显示运行进度
+	QWidget* loading;
 
 	private slots:
 
@@ -100,6 +107,8 @@ private:
 		void handle_img2(QString);
 		void handle_img3(QString);
 		void handle_img4(QString);
+
+
 
 
 };

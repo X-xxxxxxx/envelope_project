@@ -52,6 +52,9 @@
     <ClCompile Include="workerThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LoadingFrom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="init_window.h">
@@ -66,6 +69,9 @@
     <QtMoc Include="workerThread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="LoadingFrom.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="init_window.ui">
@@ -75,6 +81,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="spl.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="LoadingFrom.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

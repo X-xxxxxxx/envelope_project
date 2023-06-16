@@ -88,6 +88,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LoadingFrom.cpp" />
     <ClCompile Include="spl.cpp" />
     <ClCompile Include="workerThread.cpp" />
     <QtRcc Include="envelopeMain.qrc" />
@@ -99,6 +100,7 @@
     <ClCompile Include="main.cpp" />
     <QtUic Include="init_window.ui" />
     <QtUic Include="inter.ui" />
+    <QtUic Include="LoadingFrom.ui" />
     <QtUic Include="spl.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="workerThread.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="LoadingFrom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

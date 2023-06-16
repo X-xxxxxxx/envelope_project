@@ -9,6 +9,25 @@ spl::spl(QWidget *parent)
 	pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
 	setPalette(pal);
 
+
+
+
+	loading = new LoadingFrom(this);
+
+	loading->setFixedSize(this->size());//设置窗口大小
+	loading->setAutoFillBackground(true); //这个很重要，否则不会显示遮罩层
+	QPalette pal_mask = loading->palette();
+	//QColor color;
+	//color.setRgb(0, 255, 255, 255);
+	pal_mask.setColor(QPalette::Background, QColor(0x00, 0x00, 0x00, 0x30));
+	loading->setPalette(pal_mask);
+
+
+	loading->setVisible(false);//初始状态下隐藏，待需要显示时使用
+
+
+
+
 	// 左半部控件
 	lb_interval_set = new QLabel(QStringLiteral("区间大小"));
 	lb_interval_set->setAlignment(Qt::AlignCenter);
@@ -205,6 +224,7 @@ void spl::create_thread()
 	}
 	worker = new workerThread(datapath, interval, degree, 2); // para 4 代表选取当前方法
 
+	loading->setVisible(true);
 
 	qDebug() << datapath << "       " << interval  << "       " << degree << endl;
 	connect(worker, SIGNAL(send_image1(QString)), this, SLOT(handle_img1(QString)));
@@ -240,6 +260,7 @@ void spl::handle_results(double icp, double imwp, double mwd)
 
 void spl::handle_img1(QString cur_time)
 {
+	loading->setVisible(false);
 	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;

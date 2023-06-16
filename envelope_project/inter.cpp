@@ -9,6 +9,19 @@ inter::inter(QWidget *parent)
 	pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
 	setPalette(pal);
 
+	loading = new LoadingFrom(this);
+
+	loading->setFixedSize(this->size());//设置窗口大小
+	loading->setAutoFillBackground(true); //这个很重要，否则不会显示遮罩层
+	QPalette pal_mask = loading->palette();
+	//QColor color;
+	//color.setRgb(0, 255, 255, 255);
+	pal_mask.setColor(QPalette::Background, QColor(0x00, 0x00, 0x00, 0x30));
+	loading->setPalette(pal_mask);
+
+
+	loading->setVisible(false);//初始状态下隐藏，待需要显示时使用
+
 
 
 
@@ -174,6 +187,11 @@ inter::inter(QWidget *parent)
 	 layout_main->addLayout(layout_right);
 	 layout_main->setStretchFactor(layout_left, 1);
 	 layout_main->setStretchFactor(layout_right, 3);
+
+
+	 // 新建一个进度条
+
+	 
 }
 
 void inter::get_datapath(QString datapath)
@@ -182,6 +200,8 @@ void inter::get_datapath(QString datapath)
 }
 
 void inter::closeEvent(QCloseEvent* event)
+
+
 {
 	emit this_to_fath();
 	event->accept();
@@ -203,7 +223,8 @@ void inter::change_degree()
 }
 
 void inter::create_thread()
-{
+{	
+
 	if (datapath == nullptr)
 	{
 		QMessageBox::information(this, QStringLiteral("数据路径选取失败提示窗口"),
@@ -212,6 +233,10 @@ void inter::create_thread()
 		return;
 	}
 	worker = new workerThread(datapath, interval, degree, 1); // para 4 代表选取当前方法
+	// 运行中窗口
+	loading->setVisible(true);
+
+
 
 
 	// 图片发送信号接收槽
@@ -249,6 +274,9 @@ void inter::handle_results(double icp, double imwp, double mwd)
 
 void inter::handle_img1(QString cur_time)
 {
+
+	loading->setVisible(false);
+
 	QString imgfullpath ="C:/Users/X_xx/Desktop/res_save/" + tr("original_data_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
@@ -303,6 +331,7 @@ void inter::handle_img4(QString cur_time)
 	lb_image4_show->setScaledContents(true);
 	lb_image4_show->setPixmap(icon);
 }
+
 
 inter::~inter()
 {}

@@ -31,6 +31,9 @@
 //
 
 #include <QImageReader>
+//
+
+#include "LoadingFrom.h"
 
 class spl : public QWidget
 {
@@ -93,6 +96,8 @@ private:
 	QGridLayout* layout_right; // 右半部布局
 	QHBoxLayout* layout_main; //主布局
 
+	// 显示运行进度
+	QWidget* loading;
 
 private slots:
 	void change_interval();
