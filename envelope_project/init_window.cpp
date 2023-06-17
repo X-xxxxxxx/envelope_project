@@ -7,7 +7,7 @@ init_window::init_window(QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
-
+    
     //QPalette pal = this->palette();
     //pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
     //setPalette(pal);
@@ -108,7 +108,7 @@ void init_window::show_this()
 void init_window::data_read()
 {
     this -> datapath = QFileDialog :: getOpenFileName(this, 
-        QStringLiteral("请选择数据"),"C:/Users/X_xx/Desktop", "*.txt ");
+        QStringLiteral("请选择数据"),"/", "*.txt ");
 
     QMessageBox::information(this, QStringLiteral("数据选取成功提示窗口"),
         QStringLiteral("数据已添加成功，请进行后续操作"));

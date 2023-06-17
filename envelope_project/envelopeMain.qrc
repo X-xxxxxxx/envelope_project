@@ -4,5 +4,7 @@
         <file>button_background.png</file>
         <file>loadingFrom.gif</file>
         <file>loadingFrom1.gif</file>
+        <file>start.gif</file>
+        <file>windowIcon.png</file>
     </qresource>
 </RCC>

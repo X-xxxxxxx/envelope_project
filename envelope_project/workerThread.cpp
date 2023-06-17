@@ -31,7 +31,8 @@ void workerThread::run()
 		mwArray degree_to_mw(degree, mxDOUBLE_CLASS);
 
 		// Í¼Æ¬±£´æÂ·¾¶
-		QString fig_savepath = "C:/Users/X_xx/Desktop/res_save";
+		QString desktop_path = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+		QString fig_savepath = desktop_path + "/" + "Result" + "/" + "Image" + "/";
 		std::string fig_savepath_str = fig_savepath.toStdString();
 		const char* fig_savepath_char = fig_savepath_str.c_str();
 		mwArray fig_savepath_to_mw(fig_savepath_char);

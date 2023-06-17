@@ -29,6 +29,11 @@
 
 //
 #include "LoadingFrom.h"
+//
+#include <QAxObject>
+//
+#include "word.h"
+
 
 
 class inter : public QWidget
@@ -50,6 +55,8 @@ public:
 	int interval;
 	QString datapath;
 	workerThread* worker;
+	QString curtime;
+
 
 private:
 	Ui::interClass ui;
@@ -94,6 +101,9 @@ private:
 	// 显示运行进度
 	QWidget* loading;
 
+	QString desktop_path;
+	//
+	//QWord* word;
 	private slots:
 
 		void change_interval();
@@ -109,6 +119,6 @@ private:
 		void handle_img4(QString);
 
 
-
+		void report_output();
 
 };

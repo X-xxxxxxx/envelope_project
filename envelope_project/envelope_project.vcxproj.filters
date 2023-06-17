@@ -55,6 +55,9 @@
     <ClCompile Include="LoadingFrom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="word.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="init_window.h">
@@ -70,6 +73,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="LoadingFrom.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="word.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

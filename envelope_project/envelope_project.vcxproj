@@ -30,7 +30,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.9.9_msvc2017_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;axserver;axcontainer;widgets;printsupport</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClCompile Include="LoadingFrom.cpp" />
     <ClCompile Include="spl.cpp" />
+    <ClCompile Include="word.cpp" />
     <ClCompile Include="workerThread.cpp" />
     <QtRcc Include="envelopeMain.qrc" />
     <QtUic Include="envelopeMain.ui" />
@@ -117,6 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="LoadingFrom.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="word.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

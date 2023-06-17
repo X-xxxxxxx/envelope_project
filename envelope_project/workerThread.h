@@ -7,6 +7,8 @@
 #include <mat.h>
 #include <matrix.h>
 
+//
+#include <QStandardPaths>
 
 
 #pragma comment (lib, "libmx.lib")

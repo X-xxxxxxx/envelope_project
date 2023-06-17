@@ -35,6 +35,11 @@
 
 #include "LoadingFrom.h"
 
+//
+#include <QAxObject>
+//
+#include "word.h"
+
 class spl : public QWidget
 {
 	Q_OBJECT
@@ -54,6 +59,7 @@ public:
 	QString datapath;
 	workerThread* worker;
 
+	QString curtime;
 
 private:
 	Ui::splClass ui;
@@ -98,7 +104,7 @@ private:
 
 	// 显示运行进度
 	QWidget* loading;
-
+	QString desktop_path;
 private slots:
 	void change_interval();
 	void change_degree();
@@ -113,4 +119,5 @@ private slots:
 	void handle_img2(QString);
 	void handle_img3(QString);
 	void handle_img4(QString);
+	void report_output();
 };

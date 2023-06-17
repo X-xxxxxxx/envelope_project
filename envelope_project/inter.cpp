@@ -9,6 +9,7 @@ inter::inter(QWidget *parent)
 	pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
 	setPalette(pal);
 
+	curtime = "NULL";
 	loading = new LoadingFrom(this);
 
 	loading->setFixedSize(this->size());//设置窗口大小
@@ -79,6 +80,8 @@ inter::inter(QWidget *parent)
 
 	print_report->setFont(QFont("黑体", 18));
 	print_report->setStyleSheet("background-color: #F6EBFF;");
+	connect(print_report, SIGNAL(clicked()), this, SLOT(report_output()));
+
 
 	action = new QPushButton(QStringLiteral("开始运行"));
 	action->setFixedSize(QSize(500, 150));
@@ -101,6 +104,7 @@ inter::inter(QWidget *parent)
 	lb_image1_show = new QLabel;
 	lb_image1_show->setFrameShape(QFrame::Box);
 	lb_image1_show->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+	lb_image1_show->setFixedSize(QSize(500, 425));
 
 	 lb_image2_hint = new QLabel(QStringLiteral("最大最小值提取"));
 	 lb_image2_hint->setAlignment(Qt::AlignCenter);
@@ -109,6 +113,7 @@ inter::inter(QWidget *parent)
 	 lb_image2_show = new QLabel;
 	 lb_image2_show->setFrameShape(QFrame::Box);
 	 lb_image2_show->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+	 lb_image2_show->setFixedSize(QSize(500, 425));
 
 	 lb_image3_hint = new QLabel(QStringLiteral("移动后图片"));
 	 lb_image3_hint->setAlignment(Qt::AlignCenter);
@@ -117,6 +122,7 @@ inter::inter(QWidget *parent)
 	 lb_image3_show = new QLabel;
 	 lb_image3_show->setFrameShape(QFrame::Box);
 	 lb_image3_show->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+	 lb_image3_show->setFixedSize(QSize(500, 425));
 
 	 lb_image4_hint = new QLabel(QStringLiteral("包络图片"));
 	 lb_image4_hint->setAlignment(Qt::AlignCenter);
@@ -125,7 +131,7 @@ inter::inter(QWidget *parent)
 	 lb_image4_show = new QLabel;
 	 lb_image4_show->setFrameShape(QFrame::Box);
 	 lb_image4_show->setFrameStyle(QFrame::Panel | QFrame::Sunken);
-
+	 lb_image4_show->setFixedSize(QSize(500, 425));
 
 	 layout_left = new QGridLayout;
 
@@ -167,11 +173,11 @@ inter::inter(QWidget *parent)
 	 layout_right->addWidget(lb_image1_show, 0, 0);
 	 layout_right->addWidget(lb_image1_hint, 1, 0);
 
-	 layout_right->addWidget(lb_image2_show, 2, 0);
-	 layout_right->addWidget(lb_image2_hint, 3, 0);
+	 layout_right->addWidget(lb_image3_show, 2, 0);
+	 layout_right->addWidget(lb_image3_hint, 3, 0);
 
-	 layout_right->addWidget(lb_image3_show, 0, 1);
-	 layout_right->addWidget(lb_image3_hint, 1, 1);
+	 layout_right->addWidget(lb_image2_show, 0, 1);
+	 layout_right->addWidget(lb_image2_hint, 1, 1);
 
 	 layout_right->addWidget(lb_image4_show, 2, 1);
 	 layout_right->addWidget(lb_image4_hint, 3, 1);
@@ -189,7 +195,9 @@ inter::inter(QWidget *parent)
 	 layout_main->setStretchFactor(layout_right, 3);
 
 
-	 // 新建一个进度条
+
+	 // 获取桌面路径
+	 desktop_path  = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
 	 
 }
@@ -200,8 +208,6 @@ void inter::get_datapath(QString datapath)
 }
 
 void inter::closeEvent(QCloseEvent* event)
-
-
 {
 	emit this_to_fath();
 	event->accept();
@@ -277,7 +283,9 @@ void inter::handle_img1(QString cur_time)
 
 	loading->setVisible(false);
 
-	QString imgfullpath ="C:/Users/X_xx/Desktop/res_save/" + tr("original_data_") + cur_time + ".jpg";
+	this->curtime = cur_time; // 拿到当前时间方便命名
+	
+	QString imgfullpath = desktop_path + "/" + "Result" + "/" + "Image" + "/" +  tr("original_data_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);
@@ -292,7 +300,7 @@ void inter::handle_img1(QString cur_time)
 
 void inter::handle_img2(QString cur_time)
 {
-	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_Max_Min_") + cur_time + ".jpg";
+	QString imgfullpath = desktop_path + "/" + "Result" + "/" + "Image" + "/" + tr("original_data_Max_Min_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);
@@ -306,7 +314,7 @@ void inter::handle_img2(QString cur_time)
 
 void inter::handle_img3(QString cur_time)
 {
-	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_Max_UP_Min_LOW_") + cur_time + ".jpg";
+	QString imgfullpath = desktop_path + "/" + "Result" + "/" + "Image" + "/" + tr("original_data_Max_UP_Min_LOW_") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);
@@ -320,7 +328,7 @@ void inter::handle_img3(QString cur_time)
 
 void inter::handle_img4(QString cur_time)
 {
-	QString imgfullpath = "C:/Users/X_xx/Desktop/res_save/" + tr("original_data_upper_lower") + cur_time + ".jpg";
+	QString imgfullpath = desktop_path + "/" + "Result" + "/" + "Image" + "/" + tr("original_data_upper_lower") + cur_time + ".jpg";
 
 	qDebug() << imgfullpath << endl;
 	QImageReader* reader = new QImageReader(imgfullpath);
@@ -330,6 +338,105 @@ void inter::handle_img4(QString cur_time)
 	icon.scaled(lb_image4_show->size(), Qt::KeepAspectRatio);
 	lb_image4_show->setScaledContents(true);
 	lb_image4_show->setPixmap(icon);
+}
+
+void inter::report_output()
+{
+	// 打印报告
+	// 存入路径
+
+	if (curtime == "NULL")
+	{
+		QMessageBox::information(this, QStringLiteral("结果提示窗口"),
+			QStringLiteral("未检测到结果,请先点击运行"));
+		return;
+	}
+
+	QString filepath = desktop_path + "/" + "Result" + "/" + "Report" + "/"; // 报告保存路径
+	//QString filename = "report.docx";
+	QString filename =  this->curtime +"report.docx";
+	QString fullpath = filepath + filename;
+	QFile file(fullpath);
+	if (file.exists())
+	{
+		file.remove();
+	}
+
+	// 创建word
+	//word = new QWord;
+
+
+	QWord word;
+	qDebug() << QStringLiteral("word 创建成功") << endl;
+	//qDebug() << word << endl;
+
+
+	word . createNewWord(fullpath);
+
+	qDebug() << QStringLiteral("生成word文档成功") << endl;
+	////先创建固定表头等内容
+	word.setPageOrientation(0);			//页面纵向
+	word.setWordPageView(3);			//页面视图
+	////word.insertMoveDown();				//插入回车
+	word.setFontSize(20);				//字体大小
+	word.setParagraphAlignment(0);		//下面文字置中
+	word .setFontBold(true);				//字体加粗
+	word.insertText((QString::fromLocal8Bit("遥测数据分析结果报告")));//插入文字
+	word.setFontBold(false);			//字体加粗
+	word.insertMoveDown();              //插入回车
+	word.setParagraphAlignment(1);		//下面文字置左
+	word.setFontSize(10);
+	word.insertMoveDown();
+
+	word.intsertTable(11, 2);//插入表格 10行 3列
+	word.setTableAutoFitBehavior(0);
+
+	word.setCellString(1, 1, QStringLiteral("报告生成时间"));
+
+	word.setCellString(1, 2, this->curtime);
+	word.setCellString(2, 1, QStringLiteral("方法选取"));
+
+	word.setCellString(2, 2, QStringLiteral("多项式拟合"));
+
+
+	word.setCellString(3, 1, QStringLiteral("窗口大小选取"));
+	word.setCellString(3, 2, le_interval_set->text());
+
+	word.setCellString(4, 1, QStringLiteral("拟合阶数选取"));
+	word.setCellString(4, 2, le_degree_set->text());
+
+	word.setCellString(5, 1, QStringLiteral("区间覆盖率ICP"));
+	word.setCellString(5, 2, lb_index1_show->text());
+
+	word.setCellString(6, 1, QStringLiteral("区间平均宽度百分比IMWP"));
+	word.setCellString(6, 2, lb_index2_show->text());
+
+	word.setCellString(7, 1, QStringLiteral("平均带宽误差MWD"));
+	word.setCellString(7, 2, lb_index3_show->text());
+
+	QString imagepath1 = desktop_path + "/" + "Result" + "/" + "Image" + "/" + tr("original_data_") + this -> curtime + ".jpg";
+	word.insertCellPic(8, 1, imagepath1);
+
+	QString imagepath2 = desktop_path + "/" + "Result" + "/" + "Image" + "/" + tr("original_data_Max_Min_") + this->curtime + ".jpg";
+	word.insertCellPic(8, 2, imagepath2);
+
+
+
+	word.setCellString(9, 1, QStringLiteral("                原始图片"));
+	word.setCellString(9, 2, QStringLiteral("             最大最小值提取"));
+
+	QString imagepath3 = desktop_path + "/" + "Result" + "/" + "Image" + "/" + tr("original_data_Max_UP_Min_LOW_") + this->curtime + ".jpg";
+	word.insertCellPic(10, 1, imagepath3);
+
+	QString imagepath4 = desktop_path + "/" + "Result" + "/" + "Image" + "/" + tr("original_data_upper_lower") + this->curtime + ".jpg";
+	word.insertCellPic(10, 2, imagepath4);
+	  
+	word.setCellString(11, 1, QStringLiteral("                处理后图片"));
+	word.setCellString(11, 2, QStringLiteral("             自适应包络结果"));
+
+
+
+	QMessageBox::information(this, QStringLiteral("报告生成成功提示窗口"), QStringLiteral("报告已生成"));
 }
 
 
