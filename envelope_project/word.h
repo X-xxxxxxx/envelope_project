@@ -5,7 +5,8 @@
 #include <QMainWindow>
 #include <QString>
 #include <QVariant>
-#include <QAxObject>
+//#include <QAxObject>
+#include<ActiveQt/QAxObject>
 #include <QAxWidget>
 #include <QTextCodec>
 

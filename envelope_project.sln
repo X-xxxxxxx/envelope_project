@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "envelope_project", "envelope_project\envelope_project.vcxproj", "{BE6C06C9-A2EB-4073-9E33-86555F781476}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "遥测数据包络分析系统", "遥测数据包络分析系统\遥测数据包络分析系统.vdproj", "{355ADEA5-231A-44F1-A0FF-1B7B56C38C04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,8 @@ Global
 		{BE6C06C9-A2EB-4073-9E33-86555F781476}.Debug|x64.Build.0 = Debug|x64
 		{BE6C06C9-A2EB-4073-9E33-86555F781476}.Release|x64.ActiveCfg = Release|x64
 		{BE6C06C9-A2EB-4073-9E33-86555F781476}.Release|x64.Build.0 = Release|x64
+		{355ADEA5-231A-44F1-A0FF-1B7B56C38C04}.Debug|x64.ActiveCfg = Debug
+		{355ADEA5-231A-44F1-A0FF-1B7B56C38C04}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@ init_window::init_window(QWidget *parent)
     //setPalette(pal);
 
     
-    lb_title = new QLabel(QStringLiteral("基于遥测数据航天器故障诊断系统"));
+    lb_title = new QLabel(QStringLiteral("基于动态阈值的航天遥测数据监测系统"));
     lb_title->adjustSize();
     lb_title->setAlignment(Qt::AlignCenter);
     lb_title->setFont(QFont("微软雅黑", 30));

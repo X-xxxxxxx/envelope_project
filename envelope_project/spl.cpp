@@ -4,12 +4,14 @@ spl::spl(QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
+	this->setWindowIcon(QIcon(":/envelopeMain/windowIcon.png"));
+	this->setWindowTitle(QStringLiteral("B样条拟合算法"));
 	this->setFixedSize(QDesktopWidget().availableGeometry(this).size() * 0.7);
 	QPalette pal = this->palette();
 	pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
 	setPalette(pal);
 
-
+	curtime = "NULL";
 
 
 	loading = new LoadingFrom(this);

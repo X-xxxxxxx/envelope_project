@@ -7,16 +7,6 @@
 #include <QDateTime>
 
 
-class DataBase {
-public:
-    void readData() {
-        for (int i = 0; i < 100000; ++i)
-        {
-            qDebug("reading data");
-        }
-    }
-};
-
 
 int main(int argc, char *argv[])
 {
@@ -44,7 +34,7 @@ int main(int argc, char *argv[])
 
     CoInitializeEx(nullptr, COINIT_MULTITHREADED);
     envelopeMain w;
-    w.setWindowTitle(QStringLiteral("航天器遥测数据故障诊断系统"));
+    w.setWindowTitle(QStringLiteral("基于动态阈值的航天遥测监测系统"));
   
     w.show();
     splash.finish(&w);

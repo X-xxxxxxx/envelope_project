@@ -4,12 +4,19 @@ inter::inter(QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
+	this->setWindowIcon(QIcon(":/envelopeMain/windowIcon.png"));
+	this->setWindowTitle(QStringLiteral("多项式拟合算法"));
 	this->setFixedSize(QDesktopWidget().availableGeometry(this).size() * 0.7);
+	
+	// 设置背景
 	QPalette pal = this->palette();
 	pal.setBrush(QPalette::Background, QBrush(QPixmap(":/envelopeMain/background.png")));
 	setPalette(pal);
 
 	curtime = "NULL";
+
+
+	// 初始化等待界面
 	loading = new LoadingFrom(this);
 
 	loading->setFixedSize(this->size());//设置窗口大小
